@@ -121,8 +121,6 @@ void PluginWidget::updatePublishTimeLabel()
 // eCAL Callback
 void PluginWidget::photoReceivedMessageCallback(const foxglove::CompressedImage& compressed_image_msg, long long send_time_usecs)
 {
-  eCAL::Logging::Log(eCAL_Logging_eLogLevel::log_level_info, "Received " + compressed_image_msg.format() + " photo of size " + std::to_string(compressed_image_msg.ByteSizeLong()));
-
   {
     // Lock the mutex
     std::lock_guard<std::mutex> lock(proto_message_mutex_);
@@ -132,6 +130,9 @@ void PluginWidget::photoReceivedMessageCallback(const foxglove::CompressedImage&
     // Create a copy of the new message as member variable. We cannot use a reference here, as this may cause a deadlock with the GUI thread
     last_received_photo_ = compressed_image_msg.New();
     last_received_photo_->CopyFrom(compressed_image_msg);
+
+    eCAL::Logging::Log(eCAL_Logging_eLogLevel::log_level_info, "Received " + compressed_image_msg.format() + " photo of size " +
+      std::to_string(last_received_photo_->data().length()));
 
     last_message_publish_timestamp_ = eCAL::Time::ecal_clock::time_point(std::chrono::duration_cast<eCAL::Time::ecal_clock::duration>(std::chrono::microseconds(send_time_usecs)));
 
