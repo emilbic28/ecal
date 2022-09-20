@@ -63,25 +63,11 @@ private slots:
   void copySelectedRowToClipboard() const;
 
 private:
-  QAdvancedTreeView* tree_view_;
-  MonitorTreeModel* tree_model_;
-
-  eCAL::protobuf::CDynamicSubscriber subscriber_;
   eCAL::protobuf::CSubscriber<foxglove::CompressedImage> compressed_image_subscriber_;
-  eCAL::protobuf::CProtoDecoder protobuf_decoder;
-  std::shared_ptr<ProtobufTreeBuilder> protobuf_tree_builder;
 
   std::mutex                         proto_message_mutex_;
-  google::protobuf::Message*         last_proto_message_;
   foxglove::CompressedImage*         last_received_photo_;
   eCAL::Time::ecal_clock::time_point last_message_publish_timestamp_;
-  QString                            last_error_string_;
-  bool                               last_message_was_error_;
-
-  bool                               currently_showing_error_item_;
-  int                                error_counter_;
-
-  QByteArray                         initial_tree_state_;
 
   QString                            topic_name_, topic_type_;
   bool                               new_msg_available_;
@@ -89,10 +75,6 @@ private:
 
   QLabel* label_;
 
-  void onProtoMessageCallback(const google::protobuf::Message& message, long long send_time_usecs);
   void photoReceivedMessageCallback(const foxglove::CompressedImage& message, long long send_time_usecs);
-  void onProtoErrorCallback(const std::string& error);
   void updatePublishTimeLabel();
-
-  
 };
