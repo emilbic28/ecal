@@ -22,6 +22,7 @@ find_package(Protobuf REQUIRED)
 
 set(ProtoFiles
   ${CMAKE_CURRENT_SOURCE_DIR}/src/ecal/app/pb/mma/mma.proto
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/ecal/app/pb/play/compressed_image.proto
   ${CMAKE_CURRENT_SOURCE_DIR}/src/ecal/app/pb/play/service.proto
   ${CMAKE_CURRENT_SOURCE_DIR}/src/ecal/app/pb/play/state.proto
   ${CMAKE_CURRENT_SOURCE_DIR}/src/ecal/app/pb/rec/client_service.proto
