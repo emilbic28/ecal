@@ -34,7 +34,6 @@
 #include "ui_plugin_widget.h"
 
 #include <ecal/protobuf/ecal_proto_decoder.h>
-#include <protobuf_tree_builder.h>
 #include <ecal/app/pb/play/compressed_image.pb.h>
 
 class PluginWidget : public QWidget, public eCAL::mon::PluginWidgetInterface
