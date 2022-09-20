@@ -33,13 +33,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(${PROJECT_NAME}_src
   src/plugin_widget.cpp
   src/plugin.cpp
-  src/protobuf_tree_builder.cpp
 )
 
 set(${PROJECT_NAME}_header
   src/plugin_widget.h
   src/plugin.h
-  src/protobuf_tree_builder.h
 )
 
 set(${PROJECT_NAME}_ui

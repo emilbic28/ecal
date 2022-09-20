@@ -58,10 +58,6 @@ protected:
 private slots:
   void updateTree();
 
-  void contextMenu(const QPoint &pos);
-  void copyCurrentIndexToClipboard() const;
-  void copySelectedRowToClipboard() const;
-
 private:
   eCAL::protobuf::CSubscriber<foxglove::CompressedImage> compressed_image_subscriber_;
 

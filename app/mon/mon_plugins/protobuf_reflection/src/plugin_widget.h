@@ -56,6 +56,7 @@ protected:
 private slots:
   void updateTree();
 
+  void contextMenu(const QPoint &pos);
   void copyCurrentIndexToClipboard() const;
   void copySelectedRowToClipboard() const;
 
