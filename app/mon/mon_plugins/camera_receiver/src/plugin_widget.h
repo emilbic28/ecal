@@ -55,7 +55,7 @@ protected:
   Ui::PluginWidget ui_;
 
 private slots:
-  void updateTree();
+  void updateContent();
 
 private:
   eCAL::protobuf::CSubscriber<foxglove::CompressedImage> compressed_image_subscriber_;

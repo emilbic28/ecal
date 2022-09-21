@@ -39,20 +39,17 @@ PluginWidget::PluginWidget(const QString& topic_name, const QString& topic_type,
 {
   ui_.setupUi(this);
 
-  QWidget *widget = new QWidget();
-  widget->setFixedSize(500, 500);
-  widget->show();
-  label_ = new QLabel(widget);
-  label_->setGeometry(10, 10, 480, 480);
-  label_->show();
-
-  ui_.content_layout->addWidget(widget);
-
   // Timestamp warning
   int label_height = ui_.publish_timestamp_warning_label->sizeHint().height();
   QPixmap warning_icon = QPixmap(":/ecalicons/WARNING").scaled(label_height, label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
   ui_.publish_timestamp_warning_label->setPixmap(warning_icon);
   ui_.publish_timestamp_warning_label->setVisible(false);
+
+  label_ = new QLabel(this);
+  label_->setGeometry(10, 10, 1280, 720);
+  label_->show();
+
+  ui_.content_layout->addWidget(label_);
 
   // Add eCAL Callbacks
   compressed_image_subscriber_.AddReceiveCallback(std::bind(&PluginWidget::photoReceivedMessageCallback, this, std::placeholders::_2, std::placeholders::_3));
@@ -142,7 +139,7 @@ void PluginWidget::photoReceivedMessageCallback(const foxglove::CompressedImage&
 }
 
 // Actual Tree Update
-void PluginWidget::updateTree()
+void PluginWidget::updateContent()
 {
   // If the last message was a valid message, we display that message in the
   // tree view. If the tree view is currently showing a dummy error message,
@@ -150,8 +147,12 @@ void PluginWidget::updateTree()
 
   auto photo_data = last_received_photo_->data();
   QByteArray byte_array(photo_data.c_str(), photo_data.length());
+  auto photo_label_width = label_->sizeHint().width();
+  auto photo_label_height = label_->sizeHint().height();
+  // QPixmap pixmap = QPixmap().scaled(photo_label_width, photo_label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
   QPixmap pixmap;
   pixmap.loadFromData(byte_array, "JPG");
+  pixmap.scaled(photo_label_width, photo_label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
   label_->setPixmap(pixmap);
 
   new_msg_available_ = false;
@@ -161,7 +162,7 @@ void PluginWidget::onUpdate()
 {
   if (new_msg_available_)
   {
-    updateTree();
+    updateContent();
     updatePublishTimeLabel();
     ui_.received_message_counter_label->setText(QString::number(received_message_counter_));
   }
