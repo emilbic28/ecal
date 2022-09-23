@@ -28,6 +28,7 @@
 #include <mutex>
 
 #include <CustomQt/QAdvancedTreeView.h>
+#include <QtWidgets/QLabel>
 
 #include "monitor_tree_model.h"
 

@@ -40,13 +40,21 @@ PluginWidget::PluginWidget(const QString& topic_name, const QString& topic_type,
   ui_.setupUi(this);
 
   // Timestamp warning
-  int label_height = ui_.publish_timestamp_warning_label->sizeHint().height();
-  QPixmap warning_icon = QPixmap(":/ecalicons/WARNING").scaled(label_height, label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
-  ui_.publish_timestamp_warning_label->setPixmap(warning_icon);
-  ui_.publish_timestamp_warning_label->setVisible(false);
+  // int label_height = ui_.publish_timestamp_warning_label->sizeHint().height();
+  // ui_.publish_timestamp_warning_label->setFrameShape(QFrame::Box);
+  // QPixmap warning_icon = QPixmap(":/ecalicons/WARNING").scaled(label_height, label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
+  // ui_.publish_timestamp_warning_label->setPixmap(warning_icon);
+  // ui_.publish_timestamp_warning_label->setVisible(false);
 
   label_ = new QLabel(this);
   label_->setGeometry(10, 10, 1280, 720);
+  label_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+  // label_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+  label_->setMaximumSize(1920, 1080);
+
+  label_->setFrameShape(QFrame::Box);
+  label_->setFrameShadow(QFrame::Raised);
+  label_->setAlignment(Qt::AlignHCenter);
   label_->show();
 
   ui_.content_layout->addWidget(label_);
@@ -86,13 +94,13 @@ void PluginWidget::updatePublishTimeLabel()
   if ((diff > std::chrono::milliseconds(100))
     || (diff < std::chrono::milliseconds(-100)))
   {
-    ui_.publish_timestamp_warning_label->setVisible(true);
+    // ui_.publish_timestamp_warning_label->setVisible(true);
     QString diff_string = QString::number(std::chrono::duration_cast<std::chrono::duration<double>>(diff).count(), 'f', 6);
-    ui_.publish_timestamp_warning_label->setToolTip(tr("The publisher is not synchronized, properly.\nCurrent time difference: ") + diff_string + " s");
+    // ui_.publish_timestamp_warning_label->setToolTip(tr("The publisher is not synchronized, properly.\nCurrent time difference: ") + diff_string + " s");
   }
   else
   {
-    ui_.publish_timestamp_warning_label->setVisible(false);
+    // ui_.publish_timestamp_warning_label->setVisible(false);
   }
 
   QString time_string;
@@ -108,7 +116,7 @@ void PluginWidget::updatePublishTimeLabel()
     time_string = QString::number(seconds_since_epoch, 'f', 6) + " s";
   }
 
-  ui_.publish_timestamp_label->setText(time_string);
+  // ui_.publish_timestamp_label->setText(time_string);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -148,12 +156,13 @@ void PluginWidget::updateContent()
   auto photo_data = last_received_photo_->data();
   QByteArray byte_array(photo_data.c_str(), photo_data.length());
   auto photo_label_width = label_->sizeHint().width();
+  std::cout << "EAB: photo_label_width = " << photo_label_width << std::endl;
   auto photo_label_height = label_->sizeHint().height();
-  // QPixmap pixmap = QPixmap().scaled(photo_label_width, photo_label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
+  std::cout << "EAB: photo_label_heigth = " << photo_label_height << std::endl;
   QPixmap pixmap;
   pixmap.loadFromData(byte_array, "JPG");
-  pixmap.scaled(photo_label_width, photo_label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation);
-  label_->setPixmap(pixmap);
+  // label_->setPixmap(pixmap.scaled(photo_label_width, photo_label_height, Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation));
+  label_->setPixmap(pixmap.scaled(label_->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation));
 
   new_msg_available_ = false;
 }
@@ -164,7 +173,7 @@ void PluginWidget::onUpdate()
   {
     updateContent();
     updatePublishTimeLabel();
-    ui_.received_message_counter_label->setText(QString::number(received_message_counter_));
+    // ui_.received_message_counter_label->setText(QString::number(received_message_counter_));
   }
 }
 
