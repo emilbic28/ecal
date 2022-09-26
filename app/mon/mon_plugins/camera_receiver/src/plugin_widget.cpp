@@ -55,7 +55,6 @@ PluginWidget::~PluginWidget()
 #endif // NDEBUG
 
   compressed_image_subscriber_.RemReceiveCallback();
-  delete label_;
 
   {
     std::lock_guard<std::mutex> lock(proto_message_mutex_);

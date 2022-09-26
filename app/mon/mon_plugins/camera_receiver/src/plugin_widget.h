@@ -65,8 +65,6 @@ private:
   bool                               new_msg_available_;
   int                                received_message_counter_;
 
-  QLabel* label_;
-
   void photoReceivedMessageCallback(const foxglove::CompressedImage& message, long long send_time_usecs);
   void updatePublishTimeLabel();
 };
