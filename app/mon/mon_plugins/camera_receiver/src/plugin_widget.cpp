@@ -19,10 +19,6 @@
 
 #include "plugin_widget.h"
 
-#include <CustomQt/QStandardTreeItem.h>
-
-#include "util.h"
-
 #include <QClipboard>
 #include <QMenu>
 #include <QDebug>
@@ -106,7 +102,7 @@ void PluginWidget::updatePublishTimeLabel()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//// Tree View Update                                                       ////
+//// Content Update                                                         ////
 ////////////////////////////////////////////////////////////////////////////////
 
 // eCAL Callback
@@ -132,7 +128,7 @@ void PluginWidget::photoReceivedMessageCallback(const foxglove::CompressedImage&
   }
 }
 
-// Actual Tree Update
+// Actual Content Update
 void PluginWidget::updateContent()
 {
   auto photo_data = last_received_photo_->data();

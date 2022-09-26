@@ -27,14 +27,10 @@
 #include <memory>
 #include <mutex>
 
-#include <CustomQt/QAdvancedTreeView.h>
 #include <QtWidgets/QLabel>
-
-#include "monitor_tree_model.h"
 
 #include "ui_plugin_widget.h"
 
-#include <ecal/protobuf/ecal_proto_decoder.h>
 #include <ecal/app/pb/play/compressed_image.pb.h>
 
 class PluginWidget : public QWidget, public eCAL::mon::PluginWidgetInterface
